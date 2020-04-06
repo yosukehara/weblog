@@ -445,7 +445,7 @@ replace(
 
 |  名称 | アイコン  |  機能  |
 | :----: | :----: | :--- |
-|  [Excel Reader]((https://nodepit.com/node/org.knime.ext.poi2.node.read4.XLSReaderNodeFactory)) | ![](images/20200331/node_icons/node_io_excel_reader.png) | Excel スプレッドシートをの1つのシートからデータのみを読み取ります。数値、日付、ブール値、文字列のデータのみを読み取ることができます。図、写真、その他のアイテムは読み取ることができません  |
+| [Excel Reader](https://nodepit.com/node/org.knime.ext.poi2.node.read4.XLSReaderNodeFactory) | ![](images/20200331/node_icons/node_io_excel_reader.png) | Excel スプレッドシートをの1つのシートからデータのみを読み取ります。数値、日付、ブール値、文字列のデータのみを読み取ることができます。図、写真、その他のアイテムは読み取ることができません  |
 | [CSV Reader](https://nodepit.com/node/org.knime.base.node.io.csvreader.CSVReaderNodeFactory) | ![](images/20200331/node_icons/node_io_csv_reader.png) |  CSVファイルを読み取ります。ノードが実行されると、入力ファイルをスキャンして列の数とタイプを決定し、自動推測された構造を持つテーブルを出力します  |
 | [CSV Writer](https://nodepit.com/node/org.knime.base.node.io.csvwriter.CSVWriterNodeFactory) | ![](images/20200331/node_icons/node_io_csv_writer.png) |  入力データテーブルをファイルまたはURLで示されるリモートの場所にCSVフォーマットで書き込みます  |
 | [String Manipulation](https://nodepit.com/node/org.knime.base.node.preproc.stringmanipulation.StringManipulationNodeFactory) | ![](images/20200331/node_icons/node_string_manipulation.png) |  検索と置換、大文字と小文字の区別、先頭と末尾の空白などの文字列を操作します  |
