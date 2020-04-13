@@ -1,0 +1,44 @@
+##
+## Lions Data's Blog
+##
+## Note:
+##   - Dependencies:
+##       - mkdocs-material (pip install mkdocs-material)
+##       - pygments (pip install pygments)
+##       - pymdown-extensions (pip install pymdown-extensions)
+##
+site_name: Lions Data's Blog
+## repo_url: https://github.com/yosukehara/weblog
+## repo_name: 'GitHub'
+site_author: Lions Data, Ltd.
+## site_favicon: favicon.ico
+copyright: (c) 2020 Lions Data, Ltd. All rights reserved.
+site_description: 
+
+## google_analytics: ['', '']
+
+docs_dir: 'src'
+theme: 'material'
+markdown_extensions:
+    - admonition
+    - codehilite:
+        linenums: true
+    - footnotes
+    - meta
+    - toc
+    - pymdownx.betterem
+    - pymdownx.caret
+    - pymdownx.critic
+    - pymdownx.inlinehilite
+    - pymdownx.magiclink
+    - pymdownx.mark
+    - pymdownx.tasklist
+    - pymdownx.tilde
+
+pages:
+- Introduction: 'index.md'
+- Data Science:
+    - KNIME:
+        - KNIME 概要: 'data-science/knime/index.md'
+        - KNIME 入門編 / 前処理 (1): 'data-science/knime/knime-1.md'
+        - KNIME 入門編 / 前処理 (2): 'data-science/knime/knime-2.md'

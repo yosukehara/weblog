@@ -1,68 +1,26 @@
-# データ分析プラットフォーム / KNIME
+# KNIME 入門編 / 前処理 (1)
 
-## ToC
-
-* [KNIME 概要](#knime-概要)
-* [KNIME 入門編 / 前処理 (1)](#knime-入門編--前処理-1)
-    * [ワークフロー全体](#ワークフロー全体)
-    * [顧客マスタ 前処理](#顧客マスタ-前処理)
-    * [売上データ 前処理](#売上データ-前処理)
-    * [使用ノード一覧](#使用ノード一覧)
-
-## KNIME 概要
-
-* [KNIME (ナイム)](https://www.knime.com/)は、データ連携・統合・分析を自動化することができるエンドツーエンドのデータ分析プラットフォームです
-	* ワークフロー型データ分析プラットフォーム - ノードと呼ばれる機能のかたまり(モジュール)を繋げていくことで、さまざまな処理を実現します
-		* データ分析、操作、視覚化、およびレポート
-	* 2000を超えるノード、数多くのワークフローサンプル、包括的な統合ツール、様々なアルゴリズムが利用でき、データに隠されている可能性を発見したり、新たな知見を得たり、未来を予測するのに役立ちます
-		* 多様な拡張機能の提供
-			* Text Mining
-			* Network Mining
-			* Cheminformatics
-			* Many integrations - Java, R, Python, Weka, H2O, etc
-	* ビルトイン機械学習モジュールを利用し、高度な分析や分析の自動化を実現することができます
-
-#### KNIME IDE
-
-![KNIME IDE](images/20200331/knime_ide_screenshot_1.png)
-
-1. Workflow エディター
-2. Node リポジトリー
-3. コンソール
-
-
-KNIMEのノードは データに対してタスクを実行します。各ノードには設定画面があるので「入力、処理、出力」の設定を行なったタ後、処理を実行 *(画面上部の実行ボタンをクリックする)* します。ノードとノードを接続しワークフローを作成します。
-
-![KNIME IDE](images/20200331/node_icon.png)
-
-現在のノードのステータスは、ワークフローエディター内のノードアイコン下部に表示されるノードステータスでわかります。ノードステータスには、次の４種類あります。
-
-1. Not Configured *(未設定)*
-2. Configured *(設定済み)*
-3. Executed *(実行済み)*
-4. Error *(実行エラー)*
-
-
-## KNIME 入門編 / 前処理 (1)
+* 作成日: 2020-03-31
+* 更新日: 2020-04-11
 
 ビッグデータでは、大量のテキストデータ、数値データを扱います。数値データには、欠損値、異常値などを含む為、そのままデータ分析を進めても期待した結果・効果を得ることができません。データ分析では、データの誤り、漏れ、不足、矛盾を事前にチェックし、データを整える「前処理」という工程が必要とされています。今回は、顧客マスタと売上データの二つのデータの前処理を行います。その結果をCSV形式ファイルに保存し、次回の探索的データ分析 *(可視化含む)* に進みます。
 
 
-### ワークフロー全体
+## ワークフロー全体
 
 1. 顧客マスタ データ処理
 2. 売上データ データ処理
 3. 顧客マスタ, 売上データ結合
 4. CSV形式ファイル出力
 
-1-4のワークフローは下図の通りです。**顧客マスタ** と **売上データ** の前処理ワークフローを `META_顧客マスタ W/F` と `META_売上データ W/F` にそれぞれまとめ、その後、**前処理後の二つのテーブルを結合**します。最終的に、結合したレコードを**CSV形式ファイルとして出力**します。
+ワークフローは下の図に示した通りです。**顧客マスタ** と **売上データ** の前処理ワークフローを `META_顧客マスタ W/F` と `META_売上データ W/F` にそれぞれまとめ、その後、**前処理後の二つのテーブルを結合**します。最終的に、結合したレコードを**CSV形式ファイルとして出力**します。
 
 *Fig. 全体ワークフロー*
 
 ![ワークフロー](images/20200331/parent_wf/workflow.png)
 
 
-#### `META_顧客マスタ` と `META_売上データ` の結合
+### `META_顧客マスタ` と `META_売上データ` の結合
 
 `META_顧客マスタ W/F` と `META_売上データ W/F` の出力 *(レコード)* を結合します。結合するカラムは、`顧客名` です。
 
@@ -73,7 +31,7 @@ KNIMEのノードは データに対してタスクを実行します。各ノ�
 - 利用ノード: [Manipulation / Column / Split & Combine / Joiner](https://nodepit.com/node/org.knime.base.node.preproc.joiner.Joiner2NodeFactory)
 
 
-#### CSV形式ファイルの出力
+### CSV形式ファイルの出力
 
 最終的に得られたレコードをCSV形式ファイルとして出力します。
 
@@ -87,7 +45,7 @@ KNIMEのノードは データに対してタスクを実行します。各ノ�
 - 利用ノード: [IO / Write / CSV Writer](https://nodepit.com/node/org.knime.base.node.io.csvwriter.CSVWriterNodeFactory)
 
 
-### 顧客マスタ 前処理
+## 顧客マスタ 前処理
 
 処理概要:
 
@@ -107,7 +65,7 @@ KNIMEのノードは データに対してタスクを実行します。各ノ�
 ![顧客マスタ.前処理ワークフロー](images/20200331/customer_master_wf/workflow.png)
 
 
-#### 1. 顧客マスター Excelファイル 読込み
+### 1. 顧客マスター Excelファイル 読込み
 
 KNIMEに 顧客マスターファイル *(Excel)* を読み込み、レコードを確認します。
 
@@ -119,7 +77,7 @@ KNIMEに 顧客マスターファイル *(Excel)* を読み込み、レコード
 - 利用ノード: [IO / Read / Excel Reader](https://nodepit.com/node/org.knime.ext.poi2.node.read4.XLSReaderNodeFactory)
 
 
-#### 2-1. 顧客マスター 前処理 / 氏名カラム / スペース除去
+### 2-1. 顧客マスター 前処理 / 氏名カラム / スペース除去
 
 顧客マスター.登録日カラムのフォーマットを統一する為、不要なスペース *(Whitespace)* を除去します。
 
@@ -131,7 +89,7 @@ KNIMEに 顧客マスターファイル *(Excel)* を読み込み、レコード
 - 利用ノード: [Manipulation / Column / Convert & Replace / String Manipulation](https://nodepit.com/node/org.knime.base.node.preproc.stringmanipulation.StringManipulationNodeFactory)
 
 
-#### 2-2. 顧客マスター 前処理 / 登録日カラム / 日付フォーマット判定 + レコード分割
+### 2-2. 顧客マスター 前処理 / 登録日カラム / 日付フォーマット判定 + レコード分割
 
 `登録日` カラムの値が 期待する日付フォーマットと それ以外に分類します。
 
@@ -142,7 +100,7 @@ KNIMEに 顧客マスターファイル *(Excel)* を読み込み、レコード
 
 - 利用ノード: [Manipulation / Row / Filter / Row Splitter](https://nodepit.com/node/org.knime.base.node.preproc.filter.row.RowFilter2PortNodeFactory)
 
-##### 除外レコード (Filtered Out)
+#### 除外レコード (Filtered Out)
 
 ノードアイコン を選択し、処理メニューの中の **Filtered Out** を実行することで、除外レコード *(期待する日付フォーマット以外)* のレコードが表示されます。
 
@@ -157,7 +115,7 @@ KNIMEに 顧客マスターファイル *(Excel)* を読み込み、レコード
 ![](images/20200331/customer_master_wf/window_2_2_3.png)
 
 
-#### 2-3. 顧客マスター 前処理 / 登録日カラム / 文字列置換
+### 2-3. 顧客マスター 前処理 / 登録日カラム / 文字列置換
 
 「2-1. 顧客マスター 前処理 / 氏名カラム / スペース除去」と同様に `String Manipulation` ノードを使って、文字列置換を行う - 値から 文字列 `reserved-` と `x1F` を除去します。
 
@@ -168,7 +126,7 @@ replace(replace($登録日$, "reserved-", ""), "x1F", "")
 - 利用ノード: [Manipulation / Column / Convert & Replace / String Manipulation](https://nodepit.com/node/org.knime.base.node.preproc.stringmanipulation.StringManipulationNodeFactory)
 
 
-#### 2-4. 顧客マスター 前処理 / 登録日カラム / 文字列から数値へ変換
+### 2-4. 顧客マスター 前処理 / 登録日カラム / 文字列から数値へ変換
 
 前のノード - 「2-3. 顧客マスター 前処理 / 登録日カラム / 文字列置換」で `登録日` から不要な文字列を除去し、シリアル値 *(文字列)* に整形したので、それを数値に変換すます。
 
@@ -177,7 +135,7 @@ replace(replace($登録日$, "reserved-", ""), "x1F", "")
 - 利用ノード: [Manipulation / Column / Convert & Replace / String To Number](https://nodepit.com/node/org.knime.base.node.preproc.colconvert.stringtonumber2.StringToNumber2NodeFactory)
 
 
-#### 2-5. 顧客マスター 前処理 / 登録日カラム / Javaコード - シリアル値からUnix Timestampへ変換
+### 2-5. 顧客マスター 前処理 / 登録日カラム / Javaコード - シリアル値からUnix Timestampへ変換
 
 前のノード - 「2-4. 顧客マスター 前処理 / 登録日カラム / 文字列から数値へ変換」で `登録日` のシリアル値を得ることができたので、さらにその値を Unix Timestampに変換します。
 
@@ -195,7 +153,7 @@ out_RegisterdAt = (c_RegisterdAt - 25569) * 86400;
 - 利用ノード: [Scripting / Java / Java Snipet](https://nodepit.com/node/org.knime.base.node.jsnippet.JavaSnippetNodeFactory)
 
 
-#### 2-6. 顧客マスター 前処理 / 登録日カラム / Unix Timestampから日付型へ変換
+### 2-6. 顧客マスター 前処理 / 登録日カラム / Unix Timestampから日付型へ変換
 
 前のノード - 「2-5. 顧客マスター 前処理 / 登録日カラム / Javaコード - シリアル値からUnix Timestampへ変換」で `登録日` の Unix Timestampの値を得ることができたので、日付型に変換します。
 
@@ -207,7 +165,7 @@ out_RegisterdAt = (c_RegisterdAt - 25569) * 86400;
 - 利用ノード: [Other / Data Types / Time Series / Transform / UNIX Timestamp to Date&Time](https://nodepit.com/node/org.knime.time.node.convert.timestamptodatetime.TimestampToDateTimeNodeFactory)
 
 
-#### 2-7. 顧客マスター 前処理 / レコード結合
+### 2-7. 顧客マスター 前処理 / レコード結合
 
 `登録日` カラムの不正な値を日付型に修正したレコードと、最初から日付型のレコードを結合し、データ分析用のレコードセットを作成する。処理後のレコードは、`Concatenated table` を実行することで確認することができます。
 
@@ -217,7 +175,7 @@ out_RegisterdAt = (c_RegisterdAt - 25569) * 86400;
 
 - 利用ノード: [Manipulation / Row / Transform / Concatenate](https://nodepit.com/node/org.knime.base.node.preproc.append.row.AppendedRowsNodeFactory)
 
-#### 3. データ処理後 ファイル出力
+### 3. データ処理後 ファイル出力
 
 前処理を完了したレコードをCSV形式で保存しておくことで、再利用することができる。ファイルの保存先を指定し、既に同名称のファイルが存在する時は、上書きするように `If file exists...: Overwrite(上書き)` を指定します。
 
@@ -227,7 +185,7 @@ out_RegisterdAt = (c_RegisterdAt - 25569) * 86400;
 - 利用ノード: [IO / Write / CSV Writer](https://nodepit.com/node/org.knime.base.node.io.csvwriter.CSVWriterNodeFactory)
 
 
-### 売上データ 前処理
+## 売上データ 前処理
 
 処理概要:
 
@@ -250,7 +208,7 @@ out_RegisterdAt = (c_RegisterdAt - 25569) * 86400;
 ![売上データ.前処理ワークフロー](images/20200331/sales_data_wf/workflow.png)
 
 
-#### 1. 売上データ CSVファイル 読込み
+### 1. 売上データ CSVファイル 読込み
 
 KNIMEに 売上データファイル *(CSV)* を読み込み、レコードを確認します。
 
@@ -261,7 +219,7 @@ KNIMEに 売上データファイル *(CSV)* を読み込み、レコードを�
 - 参考: [顧客マスタ 前処理 / 1. 顧客マスター Excelファイル 読込み](#1-顧客マスター-excelファイル-読込み)
 
 
-#### 2-1. 売上データ 前処理 / 購買日 / カラム追加
+### 2-1. 売上データ 前処理 / 購買日 / カラム追加
 
 KNIMEでは、先頭カラムを`RowID`にする為、RowIDを元に `購買日` カラムを追加します。処理結果に `購買日`カラムが追加されていることを確認します。
 
@@ -280,7 +238,7 @@ KNIMEでは、先頭カラムを`RowID`にする為、RowIDを元に `購買日`
 - 利用ノード: [Manipulation / Row / Other / RowID](https://nodepit.com/node/org.knime.base.node.preproc.rowkey2.RowKeyNodeFactory2)
 
 
-#### 2-2. 売上データ 前処理 / 購買日 / データ型変更
+### 2-2. 売上データ 前処理 / 購買日 / データ型変更
 
 `購買日`カラムのデータ型を文字列から日付に変更します
 
@@ -294,7 +252,7 @@ KNIMEでは、先頭カラムを`RowID`にする為、RowIDを元に `購買日`
 - 利用ノード: [Other Data Types / Time Series /Transform / String to Date&Time](https://nodepit.com/node/org.knime.time.node.convert.stringtodatetime.StringToDateTimeNodeFactory)
 
 
-#### 2-3. 売上データ 前処理 / 購買年月 / カラム作成
+### 2-3. 売上データ 前処理 / 購買年月 / カラム作成
 
 `購買日`カラムを元に `購買年月`カラムを作成し、集計時の集計項目として利用します
 
@@ -308,7 +266,7 @@ KNIMEでは、先頭カラムを`RowID`にする為、RowIDを元に `購買日`
 - 利用ノード: [Other Data Types / Time Series /Transform / Date&Time to String](https://nodepit.com/node/org.knime.time.node.convert.datetimetostring.DateTimeToStringNodeFactory)
 
 
-#### 2-4. 売上データ 前処理 / 購買年月 / カラム名変更
+### 2-4. 売上データ 前処理 / 購買年月 / カラム名変更
 
 `購買年月`カラムを正しい名称に変更します
 
@@ -322,7 +280,7 @@ KNIMEでは、先頭カラムを`RowID`にする為、RowIDを元に `購買日`
 - 利用ノード: [Other Data Types / Time Series /Transform / Date&Time to String](https://nodepit.com/node/org.knime.time.node.convert.datetimetostring.DateTimeToStringNodeFactory)
 
 
-#### 2-5. 売上データ 前処理 / 商品名 / スペース除去等 (文字列処理)
+### 2-5. 売上データ 前処理 / 商品名 / スペース除去等 (文字列処理)
 
 各レコードの `商品名`の値が統一されていない為、`商品名` カラムの値を整形します
 
@@ -345,7 +303,7 @@ replace(
 - 利用ノード: [Manipulation / Column / Convert & Replace / String Manipulation](https://nodepit.com/node/org.knime.base.node.preproc.stringmanipulation.StringManipulationNodeFactory)
 
 
-#### 2-6. 売上データ 前処理 / 商品価格 / 欠損値レコード抽出
+### 2-6. 売上データ 前処理 / 商品価格 / 欠損値レコード抽出
 
 商品価格カラムの `欠損値` のレコードを抽出し、除外されたレコード *(正しいレコード)* を元に欠損値を置換する値を 「2-7」からの処理で算出します。抽出した `欠損値` を保有するレコードを確認します。
 
@@ -365,7 +323,7 @@ replace(
 - 利用ノード: [Manipulation / Row / Filter / Row Splitter](https://nodepit.com/node/org.knime.base.node.preproc.filter.row.RowFilter2PortNodeFactory)
 
 
-#### 2-7. 売上データ 前処理 / 商品別 商品価格 平均算出
+### 2-7. 売上データ 前処理 / 商品別 商品価格 平均算出
 
 `item_name (商品名)` 別 `item_price (商品価格)` の平均値を算出します。
 
@@ -382,7 +340,7 @@ replace(
 - 利用ノード: [Manipulation / Row / Transform / GroupBy](https://nodepit.com/node/org.knime.base.node.preproc.groupby.GroupByNodeFactory)
 
 
-#### 2-8. 売上データ 前処理 / 商品別 商品価格 置換-1 (テーブル連結)
+### 2-8. 売上データ 前処理 / 商品別 商品価格 置換-1 (テーブル連結)
 
 「2-2. 欠損値抽出されたレコード」 と 「2-7. 欠損値を補完するレコード」を結合します。`Mean(item_price)` カラムが欠損値を補完する値になります。
 
@@ -401,7 +359,7 @@ replace(
 - 利用ノード: [Manipulation / Column / Split & Combine / Joiner](https://nodepit.com/node/org.knime.base.node.preproc.joiner.Joiner2NodeFactory)
 
 
-#### 2-9. 売上データ 前処理 / 商品別 商品価格 置換-2 (不要カラム削除)
+### 2-9. 売上データ 前処理 / 商品別 商品価格 置換-2 (不要カラム削除)
 
 `item_price (商品価格)` カラムを削除対象に指定し、`Mean(item_price) (平均商品価格)` カラムを残します。
 
@@ -412,7 +370,7 @@ replace(
 - 利用ノード: [Manipulation / Column / Filter / Column Filter](https://nodepit.com/node/org.knime.base.node.preproc.filter.column.DataColumnSpecFilterNodeFactory)
 
 
-#### 2-10. 売上データ 前処理 / 商品別 商品価格 置換-2 (カラム名変更)
+### 2-10. 売上データ 前処理 / 商品別 商品価格 置換-2 (カラム名変更)
 
 テーブル結合した後の `Mean(item_price) (平均商品価格)` カラムの名称を `item_price (商品価格)` 変更します。
 
@@ -423,7 +381,7 @@ replace(
 - 利用ノード: [Manipulation / Column / Convert & Replace / Column Rename](https://nodepit.com/node/org.knime.base.node.preproc.rename.RenameNodeFactory)
 
 
-#### 2-11. 売上データ 前処理 / 商品価格 / 欠損値置換
+### 2-11. 売上データ 前処理 / 商品価格 / 欠損値置換
 
 「2-2. 欠損値レコード抽出処理」で 欠損値処理対象外レコードと、「2-10. 欠損値処理を行なったレコード」を一つのテーブルにします。
 
@@ -441,7 +399,7 @@ replace(
 - 利用ノード: [Manipulation / Row / Transform / Concatenate](https://nodepit.com/node/org.knime.base.node.preproc.append.row.AppendedRowsNodeFactory)
 
 
-### 使用ノード一覧
+## 使用ノード一覧
 
 |  名称 | アイコン  |  機能  |
 | :----: | :----: | :--- |
