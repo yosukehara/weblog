@@ -207,18 +207,93 @@ X軸に購入年月別を, Y軸に商品価格の総和を指定し、全商品�
 ![](images/20200407/meta-1/node-7-2.png)
 
 
-* 利用ノード:
-	* [Manipulation / Row / Transform / Pivoting](https://nodepit.com/node/org.knime.base.node.preproc.pivot.Pivot2NodeFactory)
-	* [Manipulation / Column / Transform / Missing Value](https://nodepit.com/node/org.knime.base.node.preproc.pmml.missingval.compute.MissingValueHandlerNodeFactory)
-	* [Nodes / KNIME Labs / JavaScript Views (Labs) / Data Explorer](https://nodepit.com/node/org.knime.base.node.stats.dataexplorer.DataExplorerNodeFactory)
-	* [Views / JavaScript / Box Plot](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Box%20Plot)
-	* [Views / JavaScript / Line Plot](https://nodepit.com/node/org.knime.js.base.node.viz.plotter.line.LinePlotNodeFactory)
-	* [Views / JavaScript / Stacked Area Chart](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Stacked%20Area%20Chart)
-	* [Views / JavaScript / Bar Chart](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Bar%20Chart)
+#### 利用ノード
+
+* [Manipulation / Row / Transform / Pivoting](https://nodepit.com/node/org.knime.base.node.preproc.pivot.Pivot2NodeFactory)
+* [Manipulation / Column / Transform / Missing Value](https://nodepit.com/node/org.knime.base.node.preproc.pmml.missingval.compute.MissingValueHandlerNodeFactory)
+* [Nodes / KNIME Labs / JavaScript Views (Labs) / Data Explorer](https://nodepit.com/node/org.knime.base.node.stats.dataexplorer.DataExplorerNodeFactory)
+* [Views / JavaScript / Box Plot](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Box%20Plot)
+* [Views / JavaScript / Line Plot](https://nodepit.com/node/org.knime.js.base.node.viz.plotter.line.LinePlotNodeFactory)
+* [Views / JavaScript / Stacked Area Chart](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Stacked%20Area%20Chart)
+* [Views / JavaScript / Bar Chart](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Bar%20Chart)
+
+
+### 商品別 売上金額
+
+全期間商品別の売上金額を集計した結果の可視化を行います。この可視化により商品別の売上の相違を把握するこができます。
+
+#### データ処理 / 集計
+
+Group column(s)に `item_name (商品名)` を指定します。
+
+*Fig. 商品別 売上金額 集計 設定 (1)*
+
+![](images/20200407/meta-1/node-8-1.png)
+
+集計カラムに `item_price (商品価格)`、集計方法に `Sum (総和)` を指定します
+
+*Fig. 商品別 売上金額 集計 設定 (2)*
+
+![](images/20200407/meta-1/node-8-2.png)
+
+#### 可視化 / バーチャート
+
+Category Column *(X軸)* に `item_name (商品名)`、Y軸に `Sum(item_price)` を指定し、下図のバーチャートを出力します。
+
+*Fig. バーチャート ノード 設定*
+
+![](images/20200407/meta-1/node-9-1.png)
+
+*Fig. バーチャート*
+
+![](images/20200407/meta-1/node-9-2.png)
+
+
+#### 利用ノード
+
+* [Nodes / Manipulation / RowRow / Transform](https://nodepit.com/node/org.knime.base.node.preproc.groupby.GroupByNodeFactory)
+* [Views / JavaScript / Bar Chart](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Bar%20Chart)
+
+
+### 地域別 売上金額
+
+全期間地域別の売上金額を集計した結果の可視化を行います。この可視化により地域別の売上の相違を把握するこができます。
+
+#### データ処理 / 集計
+
+Group column(s)に `地域` を指定します。
+
+*Fig. 地域別 売上金額 集計 設定 (1)*
+
+![](images/20200407/meta-1/node-10-1.png)
+
+集計カラムに `item_price (商品価格)`、集計方法に `Sum (総和)` を指定します
+
+*Fig. 地域別 売上金額 集計 設定 (2)*
+
+![](images/20200407/meta-1/node-10-2.png)
+
+
+#### 可視化 / バーチャート
+
+Category Column *(X軸)* に `地域`、Y軸に `Sum(item_price)` を指定し、下図のバーチャートを出力します。
+
+*Fig. バーチャート ノード 設定*
+
+![](images/20200407/meta-1/node-11-1.png)
+
+*Fig. バーチャート*
+
+![](images/20200407/meta-1/node-11-2.png)
+
+#### 利用ノード
+
+* [Nodes / Manipulation / RowRow / Transform](https://nodepit.com/node/org.knime.base.node.preproc.groupby.GroupByNodeFactory)
+* [Views / JavaScript / Bar Chart](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Bar%20Chart)
 
 
 ## まとめ
 
-データクレンジング後のファイルから、ヒストグラム、箱ひげ図を作成することで、**データの分布を把握** する事ができました。また、**購入年月別商品別 売上金額 の集計結果** を各種チャートを作成したことで、購入年月別の売上総和の比較、売上全体に対しての各商品のおおよその占有率を直感的に把握する事ができました。このセクションで掲載した内容は一部であり、**購入年月別地域別**、**購買数** などの可視化を検討する必要があります。
+データクレンジング後のファイルから、ヒストグラム、箱ひげ図を作成することで、**データの分布を把握** する事ができました。また、**購入年月別商品別 売上金額 の集計結果** を各種チャートを作成したことで、購入年月別の売上総和の比較、その他 集計処理後の可視化により、**全期間の地域別売上金額, 全期間の商品別売上金額**、を直感的に把握する事ができました。このセクションで掲載した内容は一部であり、**購入年月別地域別**、**顧客別** などの可視化を検討する必要があります。
 
 今回は、[KNIME](https://www.knime.com/)を使うことで、詳細なデータ分析を進める前の データ探索、可視化を短時間で行うことが可能になることがわかりました。
