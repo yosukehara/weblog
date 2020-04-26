@@ -16,7 +16,7 @@
 
 ## KNIME IDE
 
-![KNIME IDE](images/20200331/knime_ide_screenshot_1.png)
+![KNIME IDE](images/knime-1/knime_ide_screenshot_1.png)
 
 1. Workflow エディター
 2. Node リポジトリー
@@ -25,7 +25,7 @@
 
 KNIMEのノードは データに対してタスクを実行します。各ノードには設定画面があるので「入力、処理、出力」の設定を行なったタ後、処理を実行 *(画面上部の実行ボタンをクリックする)* します。ノードとノードを接続しワークフローを作成します。
 
-![KNIME IDE](images/20200331/node_icon.png)
+![KNIME IDE](images/knime-1/node_icon.png)
 
 現在のノードのステータスは、ワークフローエディター内のノードアイコン下部に表示されるノードステータスでわかります。ノードステータスには、次の４種類あります。
 
