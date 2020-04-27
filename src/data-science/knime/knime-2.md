@@ -1,7 +1,7 @@
 # KNIME 入門編 / 探索的データ分析
 
-* 作成日: 2020-04-07
-* 更新日: 2020-04-12
+* 初版作成日: 2020-04-07
+* 最終更新日: 2020-04-12
 
 [前回 - KNIME 入門編 / 前処理 (1)](knime-1.md) で、 (1)オリジナルデータに存在していた欠損値を修正、(2)各カラムのフォーマットを統一 、することを行いました。それにより、データ分析可能なデータを作り、CSV形式ファイルに保存しました。
 
@@ -291,7 +291,7 @@ Category Column *(X軸)* に `地域`、Y軸に `Sum(item_price)` を指定し�
 
 #### 利用ノード
 
-* [Nodes / Manipulation / RowRow / Transform](https://nodepit.com/node/org.knime.base.node.preproc.groupby.GroupByNodeFactory)
+* [Nodes / Manipulation / RowRow / Transform / GroupBy](https://nodepit.com/node/org.knime.base.node.preproc.groupby.GroupByNodeFactory)
 * [Views / JavaScript / Bar Chart](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Bar%20Chart)
 
 
@@ -299,4 +299,18 @@ Category Column *(X軸)* に `地域`、Y軸に `Sum(item_price)` を指定し�
 
 データクレンジング後のファイルから、ヒストグラム、箱ひげ図を作成することで、**データの分布を把握** する事ができました。また、**購入年月別商品別 売上金額 の集計結果** を各種チャートを作成したことで、購入年月別の売上総和の比較、その他 集計処理後の可視化により、**全期間の地域別売上金額, 全期間の商品別売上金額**、を直感的に把握する事ができました。このセクションで掲載した内容は一部であり、**購入年月別地域別**、**顧客別** などの可視化を検討する必要があります。
 
-今回は、[KNIME](https://www.knime.com/)を使うことで、詳細なデータ分析を進める前の データ探索、可視化を短時間で行うことが可能になることがわかりました。
+また、詳細なデータ分析を進める前の データ探索、可視化を短時間で行うことが可能になることがわかりました。
+
+
+## Appendix / 利用ノード一覧
+
+* [Views / Local (Swing) / Interactive Histogram (Local)](https://nodepit.com/node/org.knime.base.node.viz.histogram.node.HistogramNodeFactory)
+* [Manipulation / Row / Transform / Pivoting](https://nodepit.com/node/org.knime.base.node.preproc.pivot.Pivot2NodeFactory)
+* [Manipulation / Column / Transform / Missing Value](https://nodepit.com/node/org.knime.base.node.preproc.pmml.missingval.compute.MissingValueHandlerNodeFactory)
+* [Nodes / KNIME Labs / JavaScript Views (Labs) / Data Explorer](https://nodepit.com/node/org.knime.base.node.stats.dataexplorer.DataExplorerNodeFactory)
+* [Views / JavaScript / Box Plot](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Box%20Plot)
+* [Views / JavaScript / Line Plot](https://nodepit.com/node/org.knime.js.base.node.viz.plotter.line.LinePlotNodeFactory)
+* [Views / JavaScript / Stacked Area Chart](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Stacked%20Area%20Chart)
+* [Views / JavaScript / Bar Chart](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Bar%20Chart)
+* [Nodes / Manipulation / RowRow / Transform / GroupBy](https://nodepit.com/node/org.knime.base.node.preproc.groupby.GroupByNodeFactory)
+* [Views / JavaScript / Bar Chart](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Bar%20Chart)

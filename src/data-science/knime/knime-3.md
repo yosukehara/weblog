@@ -1,16 +1,7 @@
----
-title: KNIME 入門編 / クラスタリング
-summary: KNIME 入門編 / クラスタリング
-authors:
-    - Yosuke Hara
-date: 2020-04-17
-some_url: https://lions-data.com/
----
-
 # KNIME 入門編 / クラスタリング
 
-* 作成日: 2020-04-17
-* 更新日: 2020-04-26
+* 初版作成日: 2020-04-17
+* 最終更新日: 2020-04-24
 
 今回は、すでにデータ整形が終わっている分析用データ *(トレーニングジム会員の利用履歴)* を使い 会員のクラスタリング *(クラスター分析)* を行い、それぞれのクラスターの行動の傾向を確認します。クラスタリングとは、異なる性質・特徴をもつものが混在する集合から似た性質・特徴を持つグループを作ることです。基本的なデータ解析手法としてデータマイニングでも頻繁に利用されている手法です。
 
@@ -292,7 +283,7 @@ some_url: https://lions-data.com/
 
 #### 3. Conditional Box Plot
 
-* Box Plot *(箱ひげ図)* を作成し、各クラスターの `membership_period (会員期間)` と `mean (平均利用回数/月)` のデータのばらつきを確認する
+* Box Plot *(箱ひげ図)* を作成し、各クラスターの `membership_period (会員期間)` と `mean (平均利用回数/月)` の**データのばらつき**を確認する
 * `Category column` に `Cluster (クラスター)` を指定、対象カラムに `membership_period (会員期間)` と `mean (平均利用回数/月)` を指定する
 
 *Fig. 可視化 / Conditional Box Plot / 設定*
@@ -310,7 +301,14 @@ some_url: https://lions-data.com/
 * 利用ノード: [Nodes / Views / JavaScript / Conditional Box Plot](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Conditional%20Box%20Plot)
 
 
-## 利用ノード一覧
+## まとめ
+
+データ分析の初期の段階でクラスタリングを行いサンプルをグループ化することで、より直感的にデータの特徴をつかむことができました。この分析結果を参考にして、会員の利用回数の予測、退会予測 等をすることができます。
+
+また、データに不具合さえなければ、KNIMEには、既存のクラスタリングノード - K-Means があるので、短時間でクラスタリングを行うことができます。
+
+
+## Appendix / 利用ノード一覧
 
 * [IO / Read / CSV Reader](https://nodepit.com/node/org.knime.base.node.io.csvreader.CSVReaderNodeFactory)
 * [Nodes / KNIME Labs / JavaScript Views (Labs) / Data Explorer](https://nodepit.com/node/org.knime.base.node.stats.dataexplorer.DataExplorerNodeFactory)
