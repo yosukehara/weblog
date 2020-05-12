@@ -7,10 +7,11 @@
 ##       - pygments (pip install pygments)
 ##       - pymdown-extensions (pip install pymdown-extensions)
 ##
-site_name: Lions Data's Blog
+site_name: Lions Data / Blog
 site_author: Lions Data, Ltd.
+site_url: https://lions-data.com/
 ## site_favicon: favicon.ico
-copyright: (c) 2020 Lions Data, Ltd. All rights reserved.
+copyright: (c) 2020 <a href="https://lions-data.com">Lions Data, Ltd.</a> All rights reserved.
 site_description: 
 
 ## google_analytics: ['', '']
@@ -42,4 +43,5 @@ pages:
         - KNIME 入門編 / 前処理: 'data-science/knime/knime-1.md'
         - KNIME 入門編 / 探索的データ分析: 'data-science/knime/knime-2.md'
         - KNIME 入門編 / クラスタリング : 'data-science/knime/knime-3.md'
+        - KNIME 実践編 / 解約予測 : 'data-science/knime/knime-4.md'
 
