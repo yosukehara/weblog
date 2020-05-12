@@ -3,6 +3,15 @@
 * 初版作成日: 2020-04-30
 * 最終更新日: 2020-05-12
 
+今回は、実践編の第一回目として、 <a href="https://www.kaggle.com/pavanraj159/telecom-customer-churn-prediction" target="_blank">Kaggle / Telecom Customer Churn Prediction</a> のデータを使って複数の予測モデルを実装し、精度を比較します。
+
+データの前処理から始まり、その後複数のモデル作成とモデル評価を行います。最後に4つのモデルの精度を比較します。次の4モデルを利用します。
+
+1. Decision Tree *(決定木)*
+2. Logistic Regression *(ロジスティック回帰)*
+3. Random Forrest *(ランダムフォレスト)*
+4. Multi Layer Perceptron *(多層パーセプトロン)*
+
 
 ## ワークフロー全体
 
@@ -73,18 +82,13 @@
 
 ![モデル作成, モデル評価 ワークフロー](images/knime-4/wf-part-2/wf-part-2.png)
 
-### 1. Multi Layer Perceptron
-
-
-### 2. Random Forrest
-
-
-### 3. Logistic Regression
-
-
-### 4. Decision Tree
+### 1. Decision Tree (決定木)
 
 Decision Tree *(決定木)* は、回帰分析、クラス分類に利用されます。回帰モデル、クラス分類モデルが Tree(木)構造のため、モデルを直感的に理解することができます。その反面、このモデルの精度は他の高度なモデルよりも精度が落ちる事が多いと言われています。
+
+*Fig. Decision Tree ワークフロー*
+
+![DT Workflow](images/knime-4/wf-part-2/wf2-dt-wf.png)
 
 #### **学習**
 
@@ -184,6 +188,35 @@ ROC Curveノード の実行結果は、次の通り **「AUC: 0.823」** であ
 *Fig. Decision Tree / 評価(2).結果 - AUC*
 
 ![](images/knime-4/wf-part-2/wf2-dt-node-4-3.png)
+
+
+### 2. Logistic Regression (ロジスティック回帰)
+
+*Fig. Logistic Regression ワークフロー*
+
+![LR Workflow](images/knime-4/wf-part-2/wf2-lr-wf.png)
+
+
+### 3. Random Forrest (ランダムフォレスト)
+
+*Fig. Random Forrest ワークフロー*
+
+![RF Workflow](images/knime-4/wf-part-2/wf2-rf-wf.png)
+
+
+### 4. Multi Layer Perceptron (多層パセプトロン)
+
+*Fig. Multi Layer Perceptron ワークフロー*
+
+![MLP Workflow](images/knime-4/wf-part-2/wf2-mlp-wf.png)
+
+
+
+
+
+
+
+
 
 
 [^1]: <a href="https://ja.wikipedia.org/wiki/ジニ係数" target="_blank">Gini Index *(ジニ係数)*</a>
