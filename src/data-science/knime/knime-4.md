@@ -3,67 +3,127 @@
 * 初版作成日: 2020-04-30
 * 最終更新日: 2020-05-12
 
-今回は、実践編の第一回目として、 <a href="https://www.kaggle.com/pavanraj159/telecom-customer-churn-prediction" target="_blank">Kaggle / Telecom Customer Churn Prediction</a> のデータを使って複数の予測モデルを実装し、精度を比較します。
+今回は、実践編の第一回目として、 <a href="https://www.kaggle.com/pavanraj159/telecom-customer-churn-prediction" target="_blank">Kaggle / Telecom Customer Churn Prediction (電話会社 顧客 解約予測)</a> のデータを使って複数の予測モデルを実装し、精度を比較します。
 
-データの前処理から始まり、その後複数のモデル作成とモデル評価を行います。最後に4つのモデルの精度を比較します。次の4モデルを利用します。
+データの前処理から始まり、その後複数のモデル作成とモデル評価を行います。最後に4つのモデルの精度を比較します。次の4モデルを利用し解約予測を実装します。
 
 1. Decision Tree *(決定木)*
 2. Logistic Regression *(ロジスティック回帰)*
 3. Random Forrest *(ランダムフォレスト)*
 4. Multi Layer Perceptron *(多層パーセプトロン)*
 
+<br/>
 
 ## ワークフロー全体
+
+KNIMEで実装するワークフローを二つのパートに分けて管理しています。
+
+1. データ読み込み + 前処理
+2. モデル作成 + モデル評価
+
+KNIMEの最大の長所は、ワークフローを見ただけで全体の処理の流れの俯瞰することができることです。また、各モデルの実装 *(Modeling)* を **メタノード** にすることで、メインのワークフローをより理解し易くすることが可能です。
 
 *Fig. 全体ワークフロー*
 
 ![ワークフロー](images/knime-4/workflow.png)
 
+<br/>
 
 ## 分析用データ読み込み, 前処理
+
+このワークフロー パートでは、<a href="https://www.kaggle.com/pavanraj159/telecom-customer-churn-prediction" target="_blank">Kaggle / Telecom Customer Churn Prediction (電話会社 顧客 解約予測)</a> からダウンロードしたデータをKNIMEにロードし、その後前処理を実行します。
+
+前処理では、データ確認後、判別クラス カラムの色設定、いくつかのデータ処理を経た後に、サンプル *(データ)* をトレーニングデータとテストデータに分割します。
 
 *Fig. 分析用データ読み込み, 前処理 ワークフロー*
 
 ![分析用データ読み込み, 前処理 ワークフロー](images/knime-4/wf-part-1/wf-part-1.png)
 
+<br/>
+
 ### 分析用データ読み込み
+
+<a href="https://www.kaggle.com/pavanraj159/telecom-customer-churn-prediction" target="_blank">Kaggle / Telecom Customer Churn Prediction (電話会社 顧客 解約予測)</a> からダウンロードしたデータをKNIMEにロードします。**CSV Readerノード** の設定で 特に気をつける箇所は、 以下の３点です。
+
+1. CSVファイルの文字コードが <a href="https://en.wikipedia.org/wiki/UTF-8" target="_blank">UTF-8</a> であること
+2. 行見出しの存在有無 *(Has Row Header)*
+3. デリミター文字 *(Column Delimiter)*
+
 
 *Fig. 分析用データ読み込み/設定*
 
 ![](images/knime-4/wf-part-1/wf1-node-1-1.png)
 
+* 利用ノード: [IO / Read / CSV Reader](https://nodepit.com/node/org.knime.base.node.io.csvreader.CSVReaderNodeFactory)
+
+<br/>
 
 ### データ確認
+
+<a href="https://nodepit.com/node/org.knime.base.node.stats.dataexplorer.DataExplorerNodeFactory" target="_blank">Data Explorerノード</a>を利用して、サンプルの各カラムの分布を確認します。**Numericタブ** で数値カラムの統計情報とチャート が出力されます。*(Fig. データ確認 (1), Fig. データ確認 (2))*
+
+一方、数値以外のカラムに関しては、**Nominalタブ** に各カラムの情報が出力されます。これらの情報からサンプルの特徴を把握します。*(Fig. データ確認 (3))*
 
 *Fig. データ確認 (1)*
 
 ![](images/knime-4/wf-part-1/wf1-node-2-1.png)
 
+<u>tenure *(継続期間)*</u> の分布を確認します。平均 継続期間が 32.371ヶ月、0-7ヶ月の範囲に会員数が最も多く、次に多いのが 65-72ヶ月であることがわかります。0-7ヶ月以後、 会員の約半数が解約していることがわかります。以上から tenure *(継続期間)* が 解約/継続を判別する重要なデータであると言えます。
+
 *Fig. データ確認 (2)*
 
 ![](images/knime-4/wf-part-1/wf1-node-2-2.png)
+
+数値以外のカラムのデータは、Nominalタブ内に出力される各カラムの情報 - <u>欠損値数 *(No. missings)*</u>、<u>ユニークな値の数</u>、<u>値のリスト</u>、<u>データの分布</u> を確認します。
 
 *Fig. データ確認 (3)*
 
 ![](images/knime-4/wf-part-1/wf1-node-2-3.png)
 
+* 利用ノード: [Nodes / KNIME Labs / JavaScript Views (Labs) / Data Explorer](https://nodepit.com/node/org.knime.base.node.stats.dataexplorer.DataExplorerNodeFactory)
+
+<br/>
+
 ### 色識別設定
+
+判別対象のカラムの値を識別し易くする為、<a href="" target="_blank">Color Managerノード</a> を利用します。Churnカラムの値、`No` と `Yes` に色を指定します。
 
 *Fig. 継続/解約 色設定*
 
 ![](images/knime-4/wf-part-1/wf1-node-3-1.png)
 
+* 利用ノード: [Nodes / Views / Property / Color Manager](https://nodepit.com/node/org.knime.base.node.viz.property.color.ColorManager2NodeFactory)
+
+<br/>
+
 ### 欠損値含む行削除
+
+欠損値数が少ない為 *(総行数:7043件, 欠損値行数11件)*、この演習では欠損値を含むデータを削除します。
 
 *Fig. 欠損値 設定*
 
 ![](images/knime-4/wf-part-1/wf1-node-4-1.png)
 
+* 利用ノード: [Nodes / Manipulation / Row / Filter / Row Filter](https://nodepit.com/node/org.knime.base.node.preproc.filter.row.RowFilterNodeFactory)
+
+<br/>
+
 ### 文字列カラムの数値変換
+
+モデル構築時に扱うデータは数値型が要求される為、文字列を値にもつカラムのデータを数値型に変換します。対象とするカラムは、次の4カラムです。
+
+* InternetService
+* OnlineSecurity
+* TechSupport
+* Contract
 
 *Fig. 文字列カラム 数値変換 / 設定*
 
 ![](images/knime-4/wf-part-1/wf1-node-5-1.png)
+
+* 利用ノード: [Nodes / Manipulation / Column / Convert & Replace](https://nodepit.com/node/org.knime.base.node.preproc.colconvert.categorytonumber2.CategoryToNumberNodeFactory2)
+
+<br/>
 
 ### テーブル分割
 
@@ -71,16 +131,19 @@
 
 ![](images/knime-4/wf-part-1/wf1-node-6-1.png)
 
-入力テーブルは2つのパーティション *(トレーニング用とテスト用)* に分割されます。 それぞれのパーティションには、出力ポートが存在するので、このノードの後ろに繋がるノードは、分割されたテーブルを利用することになります。
+入力テーブルは2つのパーティション *(トレーニング用とテスト用)* に分割されます。 それぞれのパーティションには、出力ポートが存在するので、このノードの後ろに繋がるノードは、分割されたテーブルを利用することになります。今回の演習では、**トレーニング用レコード と テスト用レコードの割合を 「80% : 20%」に設定**しています。
 
-今回の演習では、**トレーニング用レコード と テスト用レコードの割合を 「80% : 20%」に設定**しています。
+* 利用ノード: [Nodes / Manipulation / Row / Transform / Partitioning](https://nodepit.com/node/org.knime.base.node.preproc.partition.PartitionNodeFactory)
 
+<br/>
 
 ## モデル作成, モデル評価 (4モデル)
 
 *Fig. モデル作成, モデル評価 ワークフロー*
 
 ![モデル作成, モデル評価 ワークフロー](images/knime-4/wf-part-2/wf-part-2.png)
+
+<br/>
 
 ### 1. Decision Tree (決定木)
 
@@ -189,6 +252,7 @@ ROC Curveノード の実行結果は、次の通り **「AUC: 0.823」** であ
 
 ![](images/knime-4/wf-part-2/wf2-dt-node-4-3.png)
 
+<br/>
 
 ### 2. Logistic Regression (ロジスティック回帰)
 
@@ -212,6 +276,17 @@ ROC Curveノード の実行結果は、次の通り **「AUC: 0.823」** であ
 
 
 
+## 利用ノード一覧
+### 前処理
+
+* [IO / Read / CSV Reader](https://nodepit.com/node/org.knime.base.node.io.csvreader.CSVReaderNodeFactory)
+* [Nodes / KNIME Labs / JavaScript Views (Labs) / Data Explorer](https://nodepit.com/node/org.knime.base.node.stats.dataexplorer.DataExplorerNodeFactory)
+* [Nodes / Views / Property / Color Manager](https://nodepit.com/node/org.knime.base.node.viz.property.color.ColorManager2NodeFactory)
+* [Nodes / Manipulation / Row / Filter / Row Filter](https://nodepit.com/node/org.knime.base.node.preproc.filter.row.RowFilterNodeFactory)
+* [Nodes / Manipulation / Column / Convert & Replace](https://nodepit.com/node/org.knime.base.node.preproc.colconvert.categorytonumber2.CategoryToNumberNodeFactory2)
+* [Nodes / Manipulation / Row / Transform / Partitioning](https://nodepit.com/node/org.knime.base.node.preproc.partition.PartitionNodeFactory)
+
+### モデル作成 + モデル評価
 
 
 
