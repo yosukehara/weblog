@@ -17,7 +17,14 @@ site_description:
 ## google_analytics: ['', '']
 
 docs_dir: 'src'
-theme: 'windmill'
+theme:
+    name: 'material'
+    font:
+        text: Ubuntu
+        code: Ubuntu Mono
+    palette:
+        primary: blue grey
+        accent: indigo
 markdown_extensions:
     - admonition
     - codehilite:
@@ -26,14 +33,22 @@ markdown_extensions:
     - meta
     - toc:
         baselevel: 2
-    - pymdownx.betterem
+    - pymdownx.arithmatex
+    - pymdownx.betterem:
+        smart_enable: all
     - pymdownx.caret
     - pymdownx.critic
     - pymdownx.inlinehilite
     - pymdownx.magiclink
     - pymdownx.mark
-    - pymdownx.tasklist
+    - pymdownx.tasklist:
+        custom_checkbox: true
+    - pymdownx.tabbed
     - pymdownx.tilde
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML
+plugins:
+  - pheasant
 
 pages:
 - Introduction: 'index.md'
