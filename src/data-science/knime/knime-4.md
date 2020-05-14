@@ -12,9 +12,7 @@
 3. Random Forrest *(ランダムフォレスト)*
 4. Multi Layer Perceptron *(多層パーセプトロン)*
 
-<br/>
-
-## ワークフロー全体
+# ワークフロー全体
 
 KNIMEで実装するワークフローを二つのパートに分けて管理しています。
 
@@ -27,8 +25,6 @@ KNIMEの最大の長所は、ワークフローを見ただけで全体の処理
 
 ![ワークフロー](images/knime-4/workflow.png)
 
-<br/>
-
 ## 分析用データ読み込み, 前処理
 
 このワークフロー パートでは、<a href="https://www.kaggle.com/pavanraj159/telecom-customer-churn-prediction" target="_blank">Kaggle / Telecom Customer Churn Prediction (電話会社 顧客 解約予測)</a> からダウンロードしたデータをKNIMEにロードし、その後前処理を実行します。
@@ -38,8 +34,6 @@ KNIMEの最大の長所は、ワークフローを見ただけで全体の処理
 *Fig. 分析用データ読み込み, 前処理 ワークフロー*
 
 ![分析用データ読み込み, 前処理 ワークフロー](images/knime-4/wf-part-1/wf-part-1.png)
-
-<br/>
 
 ### 分析用データ読み込み
 
@@ -55,8 +49,6 @@ KNIMEの最大の長所は、ワークフローを見ただけで全体の処理
 ![](images/knime-4/wf-part-1/wf1-node-1-1.png)
 
 * 利用ノード: [IO / Read / CSV Reader](https://nodepit.com/node/org.knime.base.node.io.csvreader.CSVReaderNodeFactory)
-
-<br/>
 
 ### データ確認
 
@@ -82,8 +74,6 @@ KNIMEの最大の長所は、ワークフローを見ただけで全体の処理
 
 * 利用ノード: [Nodes / KNIME Labs / JavaScript Views (Labs) / Data Explorer](https://nodepit.com/node/org.knime.base.node.stats.dataexplorer.DataExplorerNodeFactory)
 
-<br/>
-
 ### 色識別設定
 
 判別対象のカラムの値を識別し易くする為、<a href="" target="_blank">Color Managerノード</a> を利用します。Churnカラムの値、`No` と `Yes` に色を指定します。
@@ -94,8 +84,6 @@ KNIMEの最大の長所は、ワークフローを見ただけで全体の処理
 
 * 利用ノード: [Nodes / Views / Property / Color Manager](https://nodepit.com/node/org.knime.base.node.viz.property.color.ColorManager2NodeFactory)
 
-<br/>
-
 ### 欠損値含む行削除
 
 欠損値数が少ない為 *(総行数:7043件, 欠損値行数11件)*、この演習では欠損値を含むデータを削除します。
@@ -105,8 +93,6 @@ KNIMEの最大の長所は、ワークフローを見ただけで全体の処理
 ![](images/knime-4/wf-part-1/wf1-node-4-1.png)
 
 * 利用ノード: [Nodes / Manipulation / Row / Filter / Row Filter](https://nodepit.com/node/org.knime.base.node.preproc.filter.row.RowFilterNodeFactory)
-
-<br/>
 
 ### 文字列カラムの数値変換
 
@@ -123,8 +109,6 @@ KNIMEの最大の長所は、ワークフローを見ただけで全体の処理
 
 * 利用ノード: [Nodes / Manipulation / Column / Convert & Replace](https://nodepit.com/node/org.knime.base.node.preproc.colconvert.categorytonumber2.CategoryToNumberNodeFactory2)
 
-<br/>
-
 ### テーブル分割
 
 *Fig. テーブル分割 / 設定*
@@ -135,17 +119,13 @@ KNIMEの最大の長所は、ワークフローを見ただけで全体の処理
 
 * 利用ノード: [Nodes / Manipulation / Row / Transform / Partitioning](https://nodepit.com/node/org.knime.base.node.preproc.partition.PartitionNodeFactory)
 
-<br/>
-
-## モデル作成, モデル評価 (4モデル)
+## モデリング
 
 *Fig. モデル作成, モデル評価 ワークフロー*
 
 ![モデル作成, モデル評価 ワークフロー](images/knime-4/wf-part-2/wf-part-2.png)
 
-<br/>
-
-### 1. Decision Tree (決定木)
+### Decision Tree (決定木)
 
 Decision Tree *(決定木)* は、回帰分析、クラス分類に利用されます。回帰モデル、クラス分類モデルが Tree(木)構造のため、モデルを直感的に理解することができます。その反面、このモデルの精度は他の高度なモデルよりも精度が落ちる事が多いと言われています。
 
@@ -153,7 +133,7 @@ Decision Tree *(決定木)* は、回帰分析、クラス分類に利用され�
 
 ![DT Workflow](images/knime-4/wf-part-2/wf2-dt-wf.png)
 
-#### **学習**
+#### 学習
 
 Decision Tree Learningノードの設定画面で、以下の6つの項目を設定します。データの特徴、分析内容に従って これらの設定を行う必要があります。
 
@@ -177,7 +157,7 @@ Decision Tree Learnerノードの実行結果を確認することで、生成�
 
 ![](images/knime-4/wf-part-2/wf2-dt-node-1-2.png)
 
-#### **予測**
+#### 予測
 
 Decision Tree Predictorノードの設定は、**Append columns with normalized class distribution** *(正規化されたクラス分布で列を追加する)* を "ON" にすることで、各予測の正規化されたクラス分布を表示します。 
 
@@ -195,7 +175,7 @@ Decision Tree Predictorノードの設定は、**Append columns with normalized 
 
 ![](images/knime-4/wf-part-2/wf2-dt-node-2-2.png)
 
-#### **評価 (1)**
+#### 評価(1)
 
 継続/退会 の判別精度を評価するため、次の通り Sorerノード を設定します。
 
@@ -215,9 +195,9 @@ Scorerノードを実行すると **Confusion Matix** *(混同行列)* をテー
 
 ![](images/knime-4/wf-part-2/wf2-dt-node-3-2.png)
 
-Accuracy *(精度)*, Kohen's Kappa *(カッパ係数)* 共に 1.0に近づくほど精度が高いとされています。カッパ係数の基準 *(Landis and Koch 基準)* は以下の通りです。
+Accuracy *(精度)*, Kohen's Kappa *(カッパ係数)* 共に 1.0に近づくほど精度が高いとされています。カッパ係数の基準 - Landis and Koch 基準があります。
 
-**Landis and Koch 基準:**
+#### Landis and Koch 基準
 
 | カッパ係数 範囲 | 解釈 |
 |:----:|----|
@@ -228,7 +208,7 @@ Accuracy *(精度)*, Kohen's Kappa *(カッパ係数)* 共に 1.0に近づくほ
 | 0.81 - 1.00 | ほぼ完全、完全一致 *(almost perfect or perfect agreement)* |
 
 
-#### **評価 (2)**
+#### 評価(2)
 
 ROC *(Receiver Operating Characteristic)* Curve *(ROC曲線)* は、二値分類の評価で使われます。Y軸にTPR *(True Positive Rate - 真陽性率)*、X軸に FPR *(False Positive Rate - 偽陽性立)* の割合をプロットします。AUC *(Area Under the Curve)* は、その曲線の下部の面のことであり、AUC の面積が大きいほどモデルの性能が良いとされています。
 
@@ -252,28 +232,109 @@ ROC Curveノード の実行結果は、次の通り **「AUC: 0.823」** であ
 
 ![](images/knime-4/wf-part-2/wf2-dt-node-4-3.png)
 
+#### 利用ノード
+
+* [Nodes / Analytics / Mining / Decision Tree / Decision Tree Learner](https://nodepit.com/node/org.knime.base.node.mine.decisiontree2.learner2.DecisionTreeLearnerNodeFactory3)
+* [Nodes / Analytics / Mining / Decision Tree / Decision Tree Predictor](https://nodepit.com/node/org.knime.base.node.mine.decisiontree2.predictor2.DecTreePredictorNodeFactory)
+* [Nodes / Views / JavaScript / Decision Tree View](https://nodepit.com/node/org.knime.js.base.node.viz.decisiontree.classification.DecisionTreeViewNodeFactory)
+* [Nodes / Analytics / Mining / Scoring / Scorer](https://nodepit.com/node/org.knime.base.node.mine.scorer.accuracy.AccuracyScorerNodeFactory)
+* [Nodes / Views / JavaScript / ROC Curve](https://nodepit.com/node/org.knime.js.base.node.viz.plotter.roc.ROCCurveNodeFactory)
+
 <br/>
 
-### 2. Logistic Regression (ロジスティック回帰)
+### Logistic Regression (ロジスティック回帰)
+
+ロジスティック回帰は、線形分類器の一種であり、教師あり学習の分類タスクに利用されるアルゴリズムです。ある事象が発生する確率を学習し、与えられたデータを2値分類 *(目的変数が2値, 3値分類以上も可能)* します。
+
+シグモイド関数の数式は次のとおりです。シグモイド関数 `hθ(x)` の取りうる値域は `0 < hθ(x) < 1` の為、分類の成立確率を算出するロジスティック回帰と相性が良いとされています。
+
+$$
+h_ \theta (x) =  \frac{\mathrm{1} }{\mathrm{1} + e^- \theta^Tx }
+$$
+
+Logistic Regressionワークフローは、Learner *(学習器)*、Predictor *(予測子)*、Scorer *(評価: スコアラー)*, ROC Curve *(評価: ROC曲線)* の４つのノードから成り立ちます。
 
 *Fig. Logistic Regression ワークフロー*
 
 ![LR Workflow](images/knime-4/wf-part-2/wf2-lr-wf.png)
 
+#### 学習
 
-### 3. Random Forrest (ランダムフォレスト)
+*Fig. Logistic Regression Learner 設定*
+
+![LR Workflow](images/knime-4/wf-part-2/wf2-lr-node-1-1.png)
+
+*Fig. Logistic Regression Learner 実行結果*
+
+![LR Workflow](images/knime-4/wf-part-2/wf2-lr-node-1-2.png)
+
+#### 予測
+
+*Fig. Logistic Regression Predictor 設定*
+
+![LR Workflow](images/knime-4/wf-part-2/wf2-lr-node-2-1.png)
+
+*Fig. Logistic Regression Predictor 実行結果*
+
+![LR Workflow](images/knime-4/wf-part-2/wf2-lr-node-2-2.png)
+
+
+#### 評価 (1)
+
+Scorerノードを実行すると **Confusion Matix** *(混同行列)* をテーブル形式で表示します。また、**Accuracy Statistics (下図参照)** *(精度統計)* を表示することで、詳細な精度を確認することができます。
+
+* Accuracy *(精度)* : 0.802
+* Kohen's Kappa *(カッパ係数)*  [^3] : 0.462
+
+*Fig. Scorer / Cofusion Matrix (混同行列)*
+
+![LR Workflow](images/knime-4/wf-part-2/wf2-lr-node-3-1.png)
+
+参照: [Landis and Koch 基準](#Landis and Koch 基準)
+
+#### 評価 (2)
+
+ROC Curveノード の実行結果は、次の通り **「AUC: 0.85」** であることがわかります
+
+*Fig. ROC Curve (ROC曲線)*
+
+![LR Workflow](images/knime-4/wf-part-2/wf2-lr-node-4-1.png)
+
+#### 利用ノード
+
+
+### Random Forrest (ランダムフォレスト)
 
 *Fig. Random Forrest ワークフロー*
 
 ![RF Workflow](images/knime-4/wf-part-2/wf2-rf-wf.png)
 
+#### 学習
 
-### 4. Multi Layer Perceptron (多層パセプトロン)
+#### 予測
+
+#### 評価 (1)
+
+#### 評価 (2)
+
+#### 利用ノード
+
+
+### Multi Layer Perceptron (多層パセプトロン)
 
 *Fig. Multi Layer Perceptron ワークフロー*
 
 ![MLP Workflow](images/knime-4/wf-part-2/wf2-mlp-wf.png)
 
+#### 学習
+
+#### 予測
+
+#### 評価 (1)
+
+#### 評価 (2)
+
+#### 利用ノード
 
 
 ## 利用ノード一覧
@@ -287,7 +348,16 @@ ROC Curveノード の実行結果は、次の通り **「AUC: 0.823」** であ
 * [Nodes / Manipulation / Row / Transform / Partitioning](https://nodepit.com/node/org.knime.base.node.preproc.partition.PartitionNodeFactory)
 
 ### モデル作成 + モデル評価
+#### Decision Tree
 
+* [Nodes / Analytics / Mining / Decision Tree / Decision Tree Learner](https://nodepit.com/node/org.knime.base.node.mine.decisiontree2.learner2.DecisionTreeLearnerNodeFactory3)
+* [Nodes / Analytics / Mining / Decision Tree / Decision Tree Predictor](https://nodepit.com/node/org.knime.base.node.mine.decisiontree2.predictor2.DecTreePredictorNodeFactory)
+* [Nodes / Views / JavaScript / Decision Tree View](https://nodepit.com/node/org.knime.js.base.node.viz.decisiontree.classification.DecisionTreeViewNodeFactory)
+
+#### 共通
+
+* [Nodes / Analytics / Mining / Scoring / Scorer](https://nodepit.com/node/org.knime.base.node.mine.scorer.accuracy.AccuracyScorerNodeFactory)
+* [Nodes / Views / JavaScript / ROC Curve](https://nodepit.com/node/org.knime.js.base.node.viz.plotter.roc.ROCCurveNodeFactory)
 
 
 
@@ -297,3 +367,52 @@ ROC Curveノード の実行結果は、次の通り **「AUC: 0.823」** であ
 [^1]: <a href="https://ja.wikipedia.org/wiki/ジニ係数" target="_blank">Gini Index *(ジニ係数)*</a>
 [^2]: <a href="https://ja.wikipedia.org/wiki/最小記述長" target="_blank"> MDL *(最小記述長)*</a>
 [^3]: <a href="https://en.wikipedia.org/wiki/Cohen%27s_kappa" target="_blank"> Kohen's Kappa *(カッパ係数)*</a>
+
+
+<style>
+.md-typeset h1 {
+    margin: 0 0 2rem;
+    color: var(--md-default-fg-color--light);
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+}
+.md-typeset h2 {
+    margin: 2rem 0 .8rem;
+    font-weight: 450;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+}
+.md-typeset h3 {
+    margin: 1.6rem 0 .8rem;
+    font-weight: 450;
+    font-size: 1.0rem;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+}
+.md-typeset h4 {
+    margin: .8rem 0;
+    font-weight: 450;
+    font-size: .8rem;
+    letter-spacing: -0.01em;
+}
+.md-typeset h5, .md-typeset h6 {
+    margin: .8rem 0;
+    color: black;
+    font-weight: 450;
+    font-size: .75rem;
+    letter-spacing: -0.01em;
+}
+.md-nav {
+    font-size: .7rem;
+    line-height: 1.3;
+}
+.md-typeset {
+    font-size: .75rem;
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+}
+</style>

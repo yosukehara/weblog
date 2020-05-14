@@ -314,3 +314,52 @@ Category Column *(X軸)* に `地域`、Y軸に `Sum(item_price)` を指定し�
 * [Views / JavaScript / Bar Chart](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Bar%20Chart)
 * [Nodes / Manipulation / RowRow / Transform / GroupBy](https://nodepit.com/node/org.knime.base.node.preproc.groupby.GroupByNodeFactory)
 * [Views / JavaScript / Bar Chart](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Bar%20Chart)
+
+
+<style>
+.md-typeset h1 {
+    margin: 0 0 2rem;
+    color: var(--md-default-fg-color--light);
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+}
+.md-typeset h2 {
+    margin: 2rem 0 .8rem;
+    font-weight: 450;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+}
+.md-typeset h3 {
+    margin: 1.6rem 0 .8rem;
+    font-weight: 450;
+    font-size: 1.0rem;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+}
+.md-typeset h4 {
+    margin: .8rem 0;
+    font-weight: 450;
+    font-size: .8rem;
+    letter-spacing: -0.01em;
+}
+.md-typeset h5, .md-typeset h6 {
+    margin: .8rem 0;
+    color: black;
+    font-weight: 450;
+    font-size: .75rem;
+    letter-spacing: -0.01em;
+}
+.md-nav {
+    font-size: .7rem;
+    line-height: 1.3;
+}
+.md-typeset {
+    font-size: .75rem;
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+}
+</style>

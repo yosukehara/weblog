@@ -419,3 +419,52 @@ replace(
 | [Column Filter](https://nodepit.com/node/org.knime.base.node.preproc.filter.column.DataColumnSpecFilterNodeFactory) | ![](images/knime-1/node_icons/node_column_filter.png) | 入力テーブルの不要な列を出力テーブルから除外します |
 | [Joiner](https://nodepit.com/node/org.knime.base.node.preproc.joiner.Joiner2NodeFactory) | ![](images/knime-1/node_icons/node_joiner.png) |  データベースのような方法で2つのテーブルを結合します (`inner join`, `left outer join` , `right outer join`, `full outer join` のいずれかを指定する)  |
 | [Java Snipet](https://nodepit.com/node/org.knime.base.node.jsnippet.JavaSnippetNodeFactory) | ![](images/knime-1/node_icons/node_java_snipet.png) |  任意のJavaコードを実行して、新しい列を作成したり、既存の列を置き換えたりできます  |
+
+
+<style>
+.md-typeset h1 {
+    margin: 0 0 2rem;
+    color: var(--md-default-fg-color--light);
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+}
+.md-typeset h2 {
+    margin: 2rem 0 .8rem;
+    font-weight: 450;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+}
+.md-typeset h3 {
+    margin: 1.6rem 0 .8rem;
+    font-weight: 450;
+    font-size: 1.0rem;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+}
+.md-typeset h4 {
+    margin: .8rem 0;
+    font-weight: 450;
+    font-size: .8rem;
+    letter-spacing: -0.01em;
+}
+.md-typeset h5, .md-typeset h6 {
+    margin: .8rem 0;
+    color: black;
+    font-weight: 450;
+    font-size: .75rem;
+    letter-spacing: -0.01em;
+}
+.md-nav {
+    font-size: .7rem;
+    line-height: 1.3;
+}
+.md-typeset {
+    font-size: .75rem;
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+}
+</style>

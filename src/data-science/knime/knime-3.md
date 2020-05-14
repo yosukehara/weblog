@@ -320,3 +320,52 @@
 * [Nodes / Views / JavaScript / Scatter Plot](https://nodepit.com/node/org.knime.js.base.node.viz.plotter.scatterSelectionAppender.ScatterPlotNodeFactory)
 * [Nodes / Community Nodes / Erlwood Nodes / Viewers](https://nodepit.com/node/org.erlwood.knime.nodes.graph.NGraphNodeFactory)
 * [Nodes / Views / JavaScript / Conditional Box Plot](https://nodepit.com/node/org.knime.dynamic.js.v30.DynamicJSNodeFactory%23Conditional%20Box%20Plot)
+
+
+<style>
+.md-typeset h1 {
+    margin: 0 0 2rem;
+    color: var(--md-default-fg-color--light);
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+}
+.md-typeset h2 {
+    margin: 2rem 0 .8rem;
+    font-weight: 450;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+}
+.md-typeset h3 {
+    margin: 1.6rem 0 .8rem;
+    font-weight: 450;
+    font-size: 1.0rem;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+}
+.md-typeset h4 {
+    margin: .8rem 0;
+    font-weight: 450;
+    font-size: .8rem;
+    letter-spacing: -0.01em;
+}
+.md-typeset h5, .md-typeset h6 {
+    margin: .8rem 0;
+    color: black;
+    font-weight: 450;
+    font-size: .75rem;
+    letter-spacing: -0.01em;
+}
+.md-nav {
+    font-size: .7rem;
+    line-height: 1.3;
+}
+.md-typeset {
+    font-size: .75rem;
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+}
+</style>
