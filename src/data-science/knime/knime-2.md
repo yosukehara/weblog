@@ -341,7 +341,7 @@ Category Column *(X軸)* に `地域`、Y軸に `Sum(item_price)` を指定し�
 }
 .md-typeset h4 {
     margin: .8rem 0;
-    font-weight: 450;
+    f====ont-weight: 450;
     font-size: .8rem;
     letter-spacing: -0.01em;
 }
@@ -353,11 +353,11 @@ Category Column *(X軸)* に `地域`、Y軸に `Sum(item_price)` を指定し�
     letter-spacing: -0.01em;
 }
 .md-nav {
-    font-size: .7rem;
+    font-size: .6rem;
     line-height: 1.3;
 }
 .md-typeset {
-    font-size: .75rem;
+    font-size: .7rem;
     line-height: 1.6;
     -webkit-print-color-adjust: exact;
     color-adjust: exact;

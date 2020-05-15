@@ -1,7 +1,7 @@
 # KNIME 実践編 / 解約予測
 
-* 初版作成日: 2020-04-30
-* 最終更新日: 2020-05-12
+* 初版作成日: 2020-05-07
+* 最終更新日: 2020-05-15
 
 今回は、実践編の第一回目として、 <a href="https://www.kaggle.com/pavanraj159/telecom-customer-churn-prediction" target="_blank">Kaggle / Telecom Customer Churn Prediction (電話会社 顧客 解約予測)</a> のデータを使って複数の予測モデルを実装し、精度を比較します。
 
@@ -9,7 +9,7 @@
 
 1. Decision Tree *(決定木)*
 2. Logistic Regression *(ロジスティック回帰)*
-3. Random Forrest *(ランダムフォレスト)*
+3. Random Forest *(ランダムフォレスト)*
 4. Multi Layer Perceptron *(多層パーセプトロン)*
 
 # ワークフロー全体
@@ -50,6 +50,8 @@ KNIMEの最大の長所は、ワークフローを見ただけで全体の処理
 
 * 利用ノード: [IO / Read / CSV Reader](https://nodepit.com/node/org.knime.base.node.io.csvreader.CSVReaderNodeFactory)
 
+<br/>
+
 ### データ確認
 
 <a href="https://nodepit.com/node/org.knime.base.node.stats.dataexplorer.DataExplorerNodeFactory" target="_blank">Data Explorerノード</a>を利用して、サンプルの各カラムの分布を確認します。**Numericタブ** で数値カラムの統計情報とチャート が出力されます。*(Fig. データ確認 (1), Fig. データ確認 (2))*
@@ -74,6 +76,8 @@ KNIMEの最大の長所は、ワークフローを見ただけで全体の処理
 
 * 利用ノード: [Nodes / KNIME Labs / JavaScript Views (Labs) / Data Explorer](https://nodepit.com/node/org.knime.base.node.stats.dataexplorer.DataExplorerNodeFactory)
 
+<br/>
+
 ### 色識別設定
 
 判別対象のカラムの値を識別し易くする為、<a href="" target="_blank">Color Managerノード</a> を利用します。Churnカラムの値、`No` と `Yes` に色を指定します。
@@ -84,6 +88,8 @@ KNIMEの最大の長所は、ワークフローを見ただけで全体の処理
 
 * 利用ノード: [Nodes / Views / Property / Color Manager](https://nodepit.com/node/org.knime.base.node.viz.property.color.ColorManager2NodeFactory)
 
+<br/>
+
 ### 欠損値含む行削除
 
 欠損値数が少ない為 *(総行数:7043件, 欠損値行数11件)*、この演習では欠損値を含むデータを削除します。
@@ -93,6 +99,8 @@ KNIMEの最大の長所は、ワークフローを見ただけで全体の処理
 ![](images/knime-4/wf-part-1/wf1-node-4-1.png)
 
 * 利用ノード: [Nodes / Manipulation / Row / Filter / Row Filter](https://nodepit.com/node/org.knime.base.node.preproc.filter.row.RowFilterNodeFactory)
+
+<br/>
 
 ### 文字列カラムの数値変換
 
@@ -109,6 +117,8 @@ KNIMEの最大の長所は、ワークフローを見ただけで全体の処理
 
 * 利用ノード: [Nodes / Manipulation / Column / Convert & Replace](https://nodepit.com/node/org.knime.base.node.preproc.colconvert.categorytonumber2.CategoryToNumberNodeFactory2)
 
+<br/>
+
 ### テーブル分割
 
 *Fig. テーブル分割 / 設定*
@@ -124,6 +134,8 @@ KNIMEの最大の長所は、ワークフローを見ただけで全体の処理
 *Fig. モデル作成, モデル評価 ワークフロー*
 
 ![モデル作成, モデル評価 ワークフロー](images/knime-4/wf-part-2/wf-part-2.png)
+
+<br/>
 
 ### Decision Tree (決定木)
 
@@ -301,7 +313,7 @@ Scorerノードを実行すると **Confusion Matix** *(混同行列)* をテー
 
 #### 評価 (2)
 
-ROC Curveノード の実行結果は、次の通り **「AUC: 0.85」** であることがわかります。良い結果と言えるでしょう。
+ROC Curveノード の実行結果は、次の通り **「AUC: 0.85」** であることがわかります。
 
 *Fig. ROC Curve (ROC曲線)*
 
@@ -312,22 +324,25 @@ ROC Curveノード の実行結果は、次の通り **「AUC: 0.85」** であ�
 * [Nodes / Analytics / Mining / Logistic Regression / Logistic Regression Learner](https://nodepit.com/node/org.knime.base.node.mine.regression.logistic.learner4.LogRegLearnerNodeFactory4)
 * [Nodes / Analytics / Mining / Logistic Regression / Logistic Regression Predictor](https://nodepit.com/node/org.knime.base.node.mine.regression.logistic.predictor.LogisticRegressionPredictorNodeFactory)
 
+<br/>
 
-### Random Forrest (ランダムフォレスト)
+### Random Forest (ランダムフォレスト)
 
-*Fig. Random Forrest ワークフロー*
+Random Forest (ランダムフォレスト)は、モデルリング章の一番最初に紹介した <u>Decision Tree (決定木)</u> を複数利用することで、それ単体よりも予測精度を向上させるアルゴリズムです。複数の<u>Decision Tree (決定木)</u> から得られた予測結果を多数決し妥当な結果を得ます。また、このモデルは、分類と回帰に利用することができます。
+
+*Fig. Random Forest ワークフロー*
 
 ![RF Workflow](images/knime-4/wf-part-2/wf2-rf-wf.png)
 
 #### 学習
 
-Randome Forrest Learnerノードの <u>1. Target Column (ターゲット列)</u>、<u>2. Use column attributes (説明変数の設定)</u>、<u>3. Split Criterion (分割基準)</u> を設定します。
+Randome Forest Learnerノードの <u>1. Target Column (ターゲット列)</u>、<u>2. Use column attributes (説明変数の設定)</u>、<u>3. Split Criterion (分割基準)</u> を設定します。
 
 1. Target Column (ターゲット列)には、Decision Tree (決定木)と同じ `Churn` を指定する
 2. Use column attributes (説明変数の設定)</u>も 同様のカラムを複数指定する
 3. Split Criterion (分割基準)は、一般的に <u>Gini Index (Gini係数)</u> を指定することが多いので、それを指定する
 
-*Fig. Randome Forrest Learner 設定*
+*Fig. Randome Forest Learner 設定*
 
 ![LR Workflow](images/knime-4/wf-part-2/wf2-rf-node-1-1.png)
 
@@ -351,7 +366,14 @@ $#splits (level 2)$ / $#candidates (level 2)$
 
 #### 予測
 
-*Fig. Randome Forrest Predictor 実行結果*
+既存のテーブルに 以下の4カラムが追加されていることを確認します。次のステップでは、継続/退会 の判別精度を評価します。
+
+* P (Churn = No) : `Churn = No` の割合
+* P (Churn = Yes) : `Churn = Yes` の割合
+* Prediction (Churn) : 予測結果
+* Prediction (Churn) (Confidence): 予測結果の信頼係数
+
+*Fig. Randome Forest Predictor 実行結果*
 
 ![LR Workflow](images/knime-4/wf-part-2/wf2-rf-node-2-2.png)
 
@@ -371,7 +393,7 @@ Scorerノードを実行すると **Confusion Matix** *(混同行列)* をテー
 
 #### 評価 (2)
 
-ROC Curveノード の実行結果は、次の通り 「AUC: 0.823」 であることがわかります。良い結果と言えるでしょう。
+ROC Curveノード の実行結果は、次の通り **「AUC: 0.823」** であることがわかります。
 
 
 *Fig. ROC Curve (ROC曲線)*
@@ -386,7 +408,11 @@ ROC Curveノード の実行結果は、次の通り 「AUC: 0.823」 である�
 * [Nodes / Manipulation / Column / Convert & Replace / Math Formula](https://nodepit.com/node/org.knime.ext.jep.JEPNodeFactory)
 * [Nodes / Manipulation / Row / Transform / Sorter](https://nodepit.com/node/org.knime.base.node.preproc.sorter.SorterNodeFactory)
 
+<br/>
+
 ### Multi Layer Perceptron (多層パセプトロン)
+
+Multi Layer Perceptron *(多層パセプトロン)* は、順伝播型ニューラルネットワークに属するアルゴリズムです。それは、単純パーセプトロンを複数繋いで多層構造 *(入力層、隠れ層/中間層、出力層)* にしたニューラルネットワークです。多層構造 *(ユニット数、階層)* は、作成するモデルによって決定します。
 
 *Fig. Multi Layer Perceptron ワークフロー*
 
@@ -394,14 +420,87 @@ ROC Curveノード の実行結果は、次の通り 「AUC: 0.823」 である�
 
 #### 学習
 
+Multi Layer Perceptron Learner ノードの <u>1. Maximum number of iteratioins *(最大イテレーション数)* </u>、<u>2. Number of hidden layers *(隠れ層数/中間層数)*</u>、<u>3. Number of hidden neurons per layer *(隠れニューロン数/層)*</u>、<u>4. Class column *(クラスカラム名)*</u> を設定します。
+
+1. Maximum number of iteratioins *(最大イテレーション数)* : 50
+2. Number of hidden layers *(隠れ層数/中間層数)* : 1
+3. Number of hidden neurons per layer *(隠れニューロン数/層)* : 12
+4. Class column *(クラスカラム名)* : `Churn` -  判別対象カラム
+
+*Fig. Multi Layer Perceptron Learner 設定*
+
+![MLP Workflow](images/knime-4/wf-part-2/wf2-mlp-node-2-1.png)
+
+学習実行後、各イテレーションのエラー数を表示します。チャートを見ると **38 - 40回でエラーが収束**していることがわかります。
+
+*Fig. Multi Layer Perceptron Learner 学習結果*
+
+![MLP Workflow](images/knime-4/wf-part-2/wf2-mlp-node-2-2.png)
+
+
 #### 予測
+
+既存のテーブルに 以下の3カラムが追加されていることを確認します。次のステップでは、継続/退会 の判別精度を評価します。
+
+* P (Churn = No) : `Churn = No` の割合
+* P (Churn = Yes) : `Churn = Yes` の割合
+* Prediction (Churn) : 予測結果
+
+*Fig. Multi Layer Perceptron Learner 予測結果*
+
+![MLP Workflow](images/knime-4/wf-part-2/wf2-mlp-node-3-2.png)
 
 #### 評価 (1)
 
+Scorerノードを実行すると **Confusion Matix** *(混同行列)* をテーブル形式で表示します。また、**Accuracy Statistics (下図参照)** *(精度統計)* を表示することで、詳細な精度を確認することができます。
+
+* Accuracy *(精度)* : 0.815
+* Kohen's Kappa *(カッパ係数)*  [^3] : 0.496 - <u>中等度の一致 (moderate agreement)</u>
+
+*Fig. Scorer / Cofusion Matrix (混同行列)*
+
+![MLP Workflow](images/knime-4/wf-part-2/wf2-mlp-node-5-1.png)
+
 #### 評価 (2)
+
+ROC Curveノード の実行結果は、次の通り **「AUC: 0.849」** であることがわかります。
+
+*Fig. ROC Curve (ROC曲線)*
+
+![MLP Workflow](images/knime-4/wf-part-2/wf2-mlp-node-6-2.png)
 
 #### 利用ノード
 
+* [Nodes / Manipulation / Column / Filter](https://nodepit.com/node/org.knime.base.node.preproc.filter.column.DataColumnSpecFilterNodeFactory)
+* [Nodes / Analytics / Mining / Neural Network / MLP / RProp MLP Learner](https://nodepit.com/node/org.knime.base.node.mine.neural.rprop.RPropNodeFactory2)
+* [Nodes / Analytics / Mining / Neural Network / MLP / MultiLayerPerceptron Predictor](https://nodepit.com/node/org.knime.base.node.mine.neural.mlp2.MLPPredictorNodeFactory)
+* [Nodes / IO / Write / PMML Writer](https://nodepit.com/node/org.knime.base.node.io.pmml.write.PMMLWriterNodeFactory)
+
+<br/>
+
+## 精度比較
+
+各モデルの精度を比較するため、Bar Chartを作成します。<u>1. MLP (Multi Layer Perceptron)</u> が最も良く、続いて <u>2. Random Forest (ランダムフォレスト)</u>、<u>3. Logistic Regression (ロジスティック回帰)</u> と <u>4. Decision Tree (決定木)</u> は同値という結果です。
+
+!!! note "Legend説明"
+    * MLP: <u>M</u>ulti <u>L</u>ayer <u>P</u>erceptron
+    * RF: <u>R</u>andom <u>F</u>orest
+    * LR: <u>L</u>ogistic <u>R</u>egression
+    * DT: <u>D</u>ecision <u>T</u>ree
+
+*Fig. 精度比較 / Bar Chart*
+
+![MLP Workflow](images/knime-4/wf-part-3/wf2-vd-node-1-2.png)
+
+*Fig. 精度比較 / ROC Curve (ROC曲線)*
+
+ROC曲線で比較すると、<u>1. MLP (Multi Layer Perceptron)</u> が最も良く、続いて <u>2. Logistic Regression (ロジスティック回帰)</u>、<u>3. Random Forest (ランダムフォレスト)</u>、<u>4. Decision Tree (決定木)</u> という結果です。
+
+![MLP Workflow](images/knime-4/wf-part-3/wf2-vd-node-2-2.png)
+
+以上の評価結果を総合すると、今回のケースでは、<u>MLP (Multi Layer Perceptron)</u> を選択した方が良いということになります。
+
+<br/>
 
 ## 利用ノード一覧
 ### 前処理
@@ -414,6 +513,7 @@ ROC Curveノード の実行結果は、次の通り 「AUC: 0.823」 である�
 * [Nodes / Manipulation / Row / Transform / Partitioning](https://nodepit.com/node/org.knime.base.node.preproc.partition.PartitionNodeFactory)
 
 ### モデル作成 + モデル評価
+
 * [Nodes / Analytics / Mining / Decision Tree / Decision Tree Learner](https://nodepit.com/node/org.knime.base.node.mine.decisiontree2.learner2.DecisionTreeLearnerNodeFactory3)
 * [Nodes / Analytics / Mining / Decision Tree / Decision Tree Predictor](https://nodepit.com/node/org.knime.base.node.mine.decisiontree2.predictor2.DecTreePredictorNodeFactory)
 * [Nodes / Views / JavaScript / Decision Tree View](https://nodepit.com/node/org.knime.js.base.node.viz.decisiontree.classification.DecisionTreeViewNodeFactory)
@@ -421,17 +521,17 @@ ROC Curveノード の実行結果は、次の通り 「AUC: 0.823」 である�
 * [Nodes / Analytics / Mining / Logistic Regression / Logistic Regression Predictor](https://nodepit.com/node/org.knime.base.node.mine.regression.logistic.predictor.LogisticRegressionPredictorNodeFactory)
 * [Nodes / Analytics / Mining / Decision Tree Ensemble / Random Forest / Classification / Random Forest Learner](https://nodepit.com/node/org.knime.base.node.mine.treeensemble2.node.randomforest.learner.classification.RandomForestClassificationLearnerNodeFactory2)
 * [Nodes / Analytics / Mining / Decision Tree Ensemble / Random Forest / Classification / Random Forest Predictor](https://nodepit.com/node/org.knime.base.node.mine.treeensemble2.node.randomforest.predictor.classification.RandomForestClassificationPredictorNodeFactory2)
-* [Nodes / Manipulation / Column / Convert & Replace / Math Formula](https://nodepit.com/node/org.knime.ext.jep.JEPNodeFactory)
-* [Nodes / Manipulation / Row / Transform / Sorter](https://nodepit.com/node/org.knime.base.node.preproc.sorter.SorterNodeFactory)
+* [Nodes / Analytics / Mining / Neural Network / MLP / RProp MLP Learner](https://nodepit.com/node/org.knime.base.node.mine.neural.rprop.RPropNodeFactory2)
+* [Nodes / Analytics / Mining / Neural Network / MLP / MultiLayerPerceptron Predictor](https://nodepit.com/node/org.knime.base.node.mine.neural.mlp2.MLPPredictorNodeFactory)
 
 #### 共通
 
 * [Nodes / Analytics / Mining / Scoring / Scorer](https://nodepit.com/node/org.knime.base.node.mine.scorer.accuracy.AccuracyScorerNodeFactory)
 * [Nodes / Views / JavaScript / ROC Curve](https://nodepit.com/node/org.knime.js.base.node.viz.plotter.roc.ROCCurveNodeFactory)
-
-
-
-
+* [Nodes / Manipulation / Row / Transform / Sorter](https://nodepit.com/node/org.knime.base.node.preproc.sorter.SorterNodeFactory)
+* [Nodes / Manipulation / Column / Filter](https://nodepit.com/node/org.knime.base.node.preproc.filter.column.DataColumnSpecFilterNodeFactory)
+* [Nodes / Manipulation / Column / Convert & Replace / Math Formula](https://nodepit.com/node/org.knime.ext.jep.JEPNodeFactory)
+* [Nodes / IO / Write / PMML Writer](https://nodepit.com/node/org.knime.base.node.io.pmml.write.PMMLWriterNodeFactory)
 
 
 [^1]: <a href="https://ja.wikipedia.org/wiki/ジニ係数" target="_blank">Gini Index *(ジニ係数)*</a>

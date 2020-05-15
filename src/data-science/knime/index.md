@@ -60,7 +60,7 @@ KNIMEのノードは データに対してタスクを実行します。各ノ�
 }
 .md-typeset h4 {
     margin: .8rem 0;
-    font-weight: 450;
+    f====ont-weight: 450;
     font-size: .8rem;
     letter-spacing: -0.01em;
 }
@@ -72,11 +72,11 @@ KNIMEのノードは データに対してタスクを実行します。各ノ�
     letter-spacing: -0.01em;
 }
 .md-nav {
-    font-size: .7rem;
+    font-size: .6rem;
     line-height: 1.3;
 }
 .md-typeset {
-    font-size: .75rem;
+    font-size: .7rem;
     line-height: 1.6;
     -webkit-print-color-adjust: exact;
     color-adjust: exact;
