@@ -189,7 +189,7 @@ Decision Tree Predictorノードの設定は、**Append columns with normalized 
 Scorerノードを実行すると **Confusion Matix** *(混同行列)* をテーブル形式で表示します。また、**Accuracy Statistics (下図参照)** *(精度統計)* を表示することで、詳細な精度を確認することができます。
 
 * Accuracy *(精度)* : 0.802
-* Kohen's Kappa *(カッパ係数)*  [^3] : 0.446
+* Kohen's Kappa *(カッパ係数)*  [^3] : 0.446 - <u>中等度の一致 (moderate agreement)</u>
 
 *Fig. Decision Tree / 評価(1).結果*
 
@@ -206,7 +206,6 @@ Accuracy *(精度)*, Kohen's Kappa *(カッパ係数)* 共に 1.0に近づくほ
 | 0.41 - 0.60 | 中等度の一致 *(moderate agreement)* |
 | 0.61 - 0.80 | かなりの一致 *(substantial agreement)* |
 | 0.81 - 1.00 | ほぼ完全、完全一致 *(almost perfect or perfect agreement)* |
-
 
 #### 評価(2)
 
@@ -260,6 +259,12 @@ Logistic Regressionワークフローは、Learner *(学習器)*、Predictor *(�
 
 #### 学習
 
+Logistic Regression Learnerノードの <u>1. Target column (ターゲット列)</u>、<u>2. Reference category (参照カテゴリ)</u>、<u>3. Feature selection (説明変数の設定)</u> を設定します。
+
+1. Target Column (ターゲット列) には、Decision Tree (決定木)と同じ `Churn` を指定する
+2. Reference category (参照カテゴリ) には、`No (継続)`
+3. Use column attributes (説明変数の設定)</u>も Decision Tree (決定木)と同様のカラムを複数指定する
+
 *Fig. Logistic Regression Learner 設定*
 
 ![LR Workflow](images/knime-4/wf-part-2/wf2-lr-node-1-1.png)
@@ -269,6 +274,8 @@ Logistic Regressionワークフローは、Learner *(学習器)*、Predictor *(�
 ![LR Workflow](images/knime-4/wf-part-2/wf2-lr-node-1-2.png)
 
 #### 予測
+
+Logistic Regression Predictorノードの設定は、デフォルトのままで変更せずに実行します。実行結果のテーブルには、<u>Prediction (Churn)</u> が追加されます。次のステップでは、継続/退会 の判別精度を評価します。
 
 *Fig. Logistic Regression Predictor 設定*
 
@@ -284,23 +291,26 @@ Logistic Regressionワークフローは、Learner *(学習器)*、Predictor *(�
 Scorerノードを実行すると **Confusion Matix** *(混同行列)* をテーブル形式で表示します。また、**Accuracy Statistics (下図参照)** *(精度統計)* を表示することで、詳細な精度を確認することができます。
 
 * Accuracy *(精度)* : 0.802
-* Kohen's Kappa *(カッパ係数)*  [^3] : 0.462
+* Kohen's Kappa *(カッパ係数)*  [^3] : 0.462 - <u>中等度の一致 (moderate agreement)</u>
 
 *Fig. Scorer / Cofusion Matrix (混同行列)*
 
 ![LR Workflow](images/knime-4/wf-part-2/wf2-lr-node-3-1.png)
 
-参照: [Landis and Koch 基準](#Landis and Koch 基準)
+参照: [Landis and Koch 基準](#landis-and-koch)
 
 #### 評価 (2)
 
-ROC Curveノード の実行結果は、次の通り **「AUC: 0.85」** であることがわかります
+ROC Curveノード の実行結果は、次の通り **「AUC: 0.85」** であることがわかります。良い結果と言えるでしょう。
 
 *Fig. ROC Curve (ROC曲線)*
 
 ![LR Workflow](images/knime-4/wf-part-2/wf2-lr-node-4-1.png)
 
 #### 利用ノード
+
+* [Nodes / Analytics / Mining / Logistic Regression / Logistic Regression Learner](https://nodepit.com/node/org.knime.base.node.mine.regression.logistic.learner4.LogRegLearnerNodeFactory4)
+* [Nodes / Analytics / Mining / Logistic Regression / Logistic Regression Predictor](https://nodepit.com/node/org.knime.base.node.mine.regression.logistic.predictor.LogisticRegressionPredictorNodeFactory)
 
 
 ### Random Forrest (ランダムフォレスト)
@@ -311,14 +321,70 @@ ROC Curveノード の実行結果は、次の通り **「AUC: 0.85」** であ�
 
 #### 学習
 
+Randome Forrest Learnerノードの <u>1. Target Column (ターゲット列)</u>、<u>2. Use column attributes (説明変数の設定)</u>、<u>3. Split Criterion (分割基準)</u> を設定します。
+
+1. Target Column (ターゲット列)には、Decision Tree (決定木)と同じ `Churn` を指定する
+2. Use column attributes (説明変数の設定)</u>も 同様のカラムを複数指定する
+3. Split Criterion (分割基準)は、一般的に <u>Gini Index (Gini係数)</u> を指定することが多いので、それを指定する
+
+*Fig. Randome Forrest Learner 設定*
+
+![LR Workflow](images/knime-4/wf-part-2/wf2-rf-node-1-1.png)
+
+説明変数の重要度評価を行い、どの説明変数が判別に貢献しているのか確認します。<u>Importance (重要度) カラム</u> の降順 *(Ascending Order)* でソートした結果、<u>1. Contract (契約)</u>、<u>2. TechSupport (テクニカルサポート)</u> の順で良いことがわかります。
+
+*Fig. 説明変数 重要度評価 結果 (Sorterノード)*
+
+![LR Workflow](images/knime-4/wf-part-2/wf2-rf-node-5-2.png)
+
+<u>Importance (重要度) </u> を算出する計算式は次の通りです。
+
+```java
+$#splits (level 0)$ / $#candidates (level 0)$ +
+$#splits (level 1)$ / $#candidates (level 1)$ +
+$#splits (level 2)$ / $#candidates (level 2)$
+```
+
+*Fig. 説明変数 重要度評価 計算式 (Math Formulaノード)*
+
+![LR Workflow](images/knime-4/wf-part-2/wf2-rf-node-5-1.png)
+
 #### 予測
+
+*Fig. Randome Forrest Predictor 実行結果*
+
+![LR Workflow](images/knime-4/wf-part-2/wf2-rf-node-2-2.png)
+
 
 #### 評価 (1)
 
+Scorerノードを実行すると **Confusion Matix** *(混同行列)* をテーブル形式で表示します。また、**Accuracy Statistics (下図参照)** *(精度統計)* を表示することで、詳細な精度を確認することができます。
+
+* Accuracy *(精度)* : 0.803
+* Kohen's Kappa *(カッパ係数)*  [^3] : 0.444 - <u>中等度の一致 (moderate agreement)</u>
+
+*Fig. Scorer / Cofusion Matrix (混同行列)*
+
+![LR Workflow](images/knime-4/wf-part-2/wf2-rf-node-3-2.png)
+
+参照: [Landis and Koch 基準](#landis-and-koch)
+
 #### 評価 (2)
+
+ROC Curveノード の実行結果は、次の通り 「AUC: 0.823」 であることがわかります。良い結果と言えるでしょう。
+
+
+*Fig. ROC Curve (ROC曲線)*
+
+![LR Workflow](images/knime-4/wf-part-2/wf2-rf-node-6-2.png)
+
 
 #### 利用ノード
 
+* [Nodes / Analytics / Mining / Decision Tree Ensemble / Random Forest / Classification / Random Forest Learner](https://nodepit.com/node/org.knime.base.node.mine.treeensemble2.node.randomforest.learner.classification.RandomForestClassificationLearnerNodeFactory2)
+* [Nodes / Analytics / Mining / Decision Tree Ensemble / Random Forest / Classification / Random Forest Predictor](https://nodepit.com/node/org.knime.base.node.mine.treeensemble2.node.randomforest.predictor.classification.RandomForestClassificationPredictorNodeFactory2)
+* [Nodes / Manipulation / Column / Convert & Replace / Math Formula](https://nodepit.com/node/org.knime.ext.jep.JEPNodeFactory)
+* [Nodes / Manipulation / Row / Transform / Sorter](https://nodepit.com/node/org.knime.base.node.preproc.sorter.SorterNodeFactory)
 
 ### Multi Layer Perceptron (多層パセプトロン)
 
@@ -348,11 +414,15 @@ ROC Curveノード の実行結果は、次の通り **「AUC: 0.85」** であ�
 * [Nodes / Manipulation / Row / Transform / Partitioning](https://nodepit.com/node/org.knime.base.node.preproc.partition.PartitionNodeFactory)
 
 ### モデル作成 + モデル評価
-#### Decision Tree
-
 * [Nodes / Analytics / Mining / Decision Tree / Decision Tree Learner](https://nodepit.com/node/org.knime.base.node.mine.decisiontree2.learner2.DecisionTreeLearnerNodeFactory3)
 * [Nodes / Analytics / Mining / Decision Tree / Decision Tree Predictor](https://nodepit.com/node/org.knime.base.node.mine.decisiontree2.predictor2.DecTreePredictorNodeFactory)
 * [Nodes / Views / JavaScript / Decision Tree View](https://nodepit.com/node/org.knime.js.base.node.viz.decisiontree.classification.DecisionTreeViewNodeFactory)
+* [Nodes / Analytics / Mining / Logistic Regression / Logistic Regression Learner](https://nodepit.com/node/org.knime.base.node.mine.regression.logistic.learner4.LogRegLearnerNodeFactory4)
+* [Nodes / Analytics / Mining / Logistic Regression / Logistic Regression Predictor](https://nodepit.com/node/org.knime.base.node.mine.regression.logistic.predictor.LogisticRegressionPredictorNodeFactory)
+* [Nodes / Analytics / Mining / Decision Tree Ensemble / Random Forest / Classification / Random Forest Learner](https://nodepit.com/node/org.knime.base.node.mine.treeensemble2.node.randomforest.learner.classification.RandomForestClassificationLearnerNodeFactory2)
+* [Nodes / Analytics / Mining / Decision Tree Ensemble / Random Forest / Classification / Random Forest Predictor](https://nodepit.com/node/org.knime.base.node.mine.treeensemble2.node.randomforest.predictor.classification.RandomForestClassificationPredictorNodeFactory2)
+* [Nodes / Manipulation / Column / Convert & Replace / Math Formula](https://nodepit.com/node/org.knime.ext.jep.JEPNodeFactory)
+* [Nodes / Manipulation / Row / Transform / Sorter](https://nodepit.com/node/org.knime.base.node.preproc.sorter.SorterNodeFactory)
 
 #### 共通
 
@@ -394,7 +464,7 @@ ROC Curveノード の実行結果は、次の通り **「AUC: 0.85」** であ�
 }
 .md-typeset h4 {
     margin: .8rem 0;
-    font-weight: 450;
+    f====ont-weight: 450;
     font-size: .8rem;
     letter-spacing: -0.01em;
 }
@@ -406,11 +476,11 @@ ROC Curveノード の実行結果は、次の通り **「AUC: 0.85」** であ�
     letter-spacing: -0.01em;
 }
 .md-nav {
-    font-size: .7rem;
+    font-size: .6rem;
     line-height: 1.3;
 }
 .md-typeset {
-    font-size: .75rem;
+    font-size: .7rem;
     line-height: 1.6;
     -webkit-print-color-adjust: exact;
     color-adjust: exact;
