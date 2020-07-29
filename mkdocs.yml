@@ -6,13 +6,14 @@
 ##       - mkdocs-material (pip install mkdocs-material)
 ##       - pygments (pip install pygments)
 ##       - pymdown-extensions (pip install pymdown-extensions)
+##       - pheasant (pip install pheasant)
 ##
 site_name: Lions Data / Blog
 site_author: Lions Data, Ltd.
 site_url: https://lions-data.com/
 ## site_favicon: favicon.ico
 copyright: (c) 2020 <a href="https://lions-data.com">Lions Data, Ltd.</a> All rights reserved.
-site_description: 
+site_description:
 
 ## google_analytics: ['', '']
 
@@ -47,10 +48,8 @@ markdown_extensions:
     - pymdownx.tilde
 extra_javascript:
   - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML
-plugins:
-  - pheasant
 
-pages:
+nav:
 - Introduction: 'index.md'
 - Data Science:
     - KNIME:
@@ -59,4 +58,5 @@ pages:
         - KNIME 入門編 / 探索的データ分析: 'data-science/knime/knime-2.md'
         - KNIME 入門編 / クラスタリング : 'data-science/knime/knime-3.md'
         - KNIME 実践編 / 解約予測 : 'data-science/knime/knime-4.md'
-
+- CV (Computer Vision):
+    - OpenCV CVAT (アノテーションツール): 'cv/tools/opencv-cvat.md'

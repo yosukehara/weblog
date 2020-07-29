@@ -8,3 +8,7 @@
 * 2020-04-17 - [knime / KNIME 入門編 / クラスタリング](data-science/knime/knime-3.md)
 * 2020-05-07 - [knime / KNIME 実践編 / 解約予測](data-science/knime/knime-4.md)
 
+## CV (Computer Vision)
+### Tools and Libs
+
+* 2020-07-27 - [Tools / OpenCV CVAT アノテーションツール](cv/tools/opencv-cvat.md)
